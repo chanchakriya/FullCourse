@@ -40,8 +40,36 @@ class AuthController extends Controller
             ]);
         }
 
+         $token = $user->createToken('auth_token')->plainTextToken;
+
+         return response([
+            'message' => 'User signed in.',
+            'user' => $user,
+            'token' => $token
+        ], 200);
+    }
+
+    public function signout(Request $request)
+    {
+        $user = $request->user();
+        $user->currentAccessToken()->delete();
         return response([
-            'message'=> 'User signin success',
-        ]);
+            'message'=> 'User signed out',
+        ], 200);
+    }
+
+    public function verify(request $request)
+    {
+        $user = $request->user();
+        if($user){
+            return response([
+                'message' => 'User is authenticated',
+                'user' => $user,
+            ], 200);
+        }else{
+            return response([
+                'message' => 'User is not authenticated',
+            ], 401);
+        }
     }
 }
