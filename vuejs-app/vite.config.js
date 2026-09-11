@@ -23,7 +23,7 @@ export default defineConfig({
       port: 5173,
     },
     watch: {
-      userpollling: true,
+      usePolling: true,
       useFsEvents: true,
       interval: 1000,
     },
